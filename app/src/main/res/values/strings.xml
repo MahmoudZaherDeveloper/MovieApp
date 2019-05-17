@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieApp Task</string>
+    <string name="facebook_app_id">2167271270027981</string>
+    <string name="fb_login_protocol_scheme">fb2167271270027981</string>
+    <string name="menu_popular_title">Popular Movies</string>
+    <string name="menu_rate_title">Top Rated Movies</string>
+    <string name="movie_name_label">Movie Name</string>
+
+</resources>
