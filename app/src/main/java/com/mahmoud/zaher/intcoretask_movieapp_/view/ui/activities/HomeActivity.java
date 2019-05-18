@@ -1,6 +1,7 @@
 package com.mahmoud.zaher.intcoretask_movieapp_.view.ui.activities;
 
 import android.annotation.SuppressLint;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,8 +21,10 @@ import android.widget.Toast;
 
 import com.mahmoud.zaher.intcoretask_movieapp_.R;
 import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.apiResponse.Result;
+import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.roomDatabase.MoviesDataBase;
 import com.mahmoud.zaher.intcoretask_movieapp_.moviePresenter.MoviePresenterContract;
 import com.mahmoud.zaher.intcoretask_movieapp_.moviePresenter.MoviePresenterImpl;
+import com.mahmoud.zaher.intcoretask_movieapp_.utils.Constants;
 import com.mahmoud.zaher.intcoretask_movieapp_.utils.Utils;
 import com.mahmoud.zaher.intcoretask_movieapp_.view.ui.adapters.MovieListAdapter;
 
@@ -54,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
 
     private MovieListAdapter movieListAdapter;
     private GridLayoutManager layoutManager;
+    private MoviesDataBase MoviesDb;
 
     public static void start(Context context) {
         Intent starter = new Intent(context, HomeActivity.class);
@@ -86,6 +90,10 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
         }
 
 
+        //room
+        MoviesDb = Room.databaseBuilder(getApplicationContext(),
+                MoviesDataBase.class, Constants.DATABASE_NAME)
+                .build();
     }
 
     @Override
@@ -146,7 +154,6 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(movieListAdapter);
         movieListAdapter.notifyDataSetChanged();
-
     }
 
     @Override

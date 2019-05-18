@@ -18,6 +18,7 @@ public class Constants {
     public static final String MOVIE_TITLE = "movieTitle";
     public static final String MOVIE_OVERVIEW = "movieOverview";
     public static final String MOVIE_POSTER = "moviePoster";
+    public static final String DATABASE_NAME = "movies_db";
 //    https://api.themoviedb.org/3/movie/popular?api_key=1959301b68a4afd398706087243bd824&language=en-US&page=1
 
 }
