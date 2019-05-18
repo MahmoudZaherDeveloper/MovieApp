@@ -33,7 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.mahmoud.zaher.intcoretask_movieapp_.utils.Constants.MOVIE_ID;
 import static com.mahmoud.zaher.intcoretask_movieapp_.utils.Constants.SELECTION_VALUE;
 
 public class HomeActivity extends AppCompatActivity implements MoviePresenterContract.IView {
@@ -127,7 +126,6 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
     @Override
     public void hideLoading() {
         progressBar.setVisibility(View.GONE);
-        // movieListAdapter.passDataToAdapter();
     }
 
     @Override
@@ -152,12 +150,8 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
     }
 
     @Override
-    public void openDetailsActivity(String id) {
-        Intent i = new Intent(this, MovieDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(MOVIE_ID, id);
-        i.putExtras(bundle);
-        startActivity(i);
+    public void openDetailsActivity(String movieId, String movieTitle, String movieOverview, String moviePoster) {
+        MovieDetailsActivity.start(this, movieId, movieTitle, movieOverview, moviePoster);
     }
 
     @OnClick(R.id.retry)

@@ -16,7 +16,7 @@ public interface MoviePresenterContract {
 
         void onReceiveMovies(List<Result> list);
 
-        void openDetailsActivity(String movieId);
+        void openDetailsActivity(String movieId, String movieTitle, String movieOverview, String moviePoster);
     }
 
     interface IPresenter {
