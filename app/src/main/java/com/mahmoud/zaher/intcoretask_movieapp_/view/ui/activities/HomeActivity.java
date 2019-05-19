@@ -47,6 +47,8 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
     ProgressBar progressBar;
     @BindView(R.id.retry)
     TextView retry;
+    @BindView(R.id.no_fav_layout)
+    LinearLayout noFavLayout;
 
     private SharedPreferences.Editor preferences;
     private List<Result> movieList;
@@ -57,7 +59,7 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
 
     public static void start(Context context) {
         Intent starter = new Intent(context, HomeActivity.class);
-        starter.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        starter.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(starter);
     }
 
@@ -79,11 +81,11 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
 
         movieList = new ArrayList<>();
 
-        if (Utils.hasConnection(this)) {
-            presenterImpl.loadData();
-        } else {
-            noConnectionLayout.setVisibility(View.VISIBLE);
-        }
+        //  if (Utils.hasConnection(this)) {
+        presenterImpl.loadData();
+        //   } else {
+        //     noConnectionLayout.setVisibility(View.VISIBLE);
+        //  }
     }
 
     @Override
@@ -94,28 +96,30 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (Utils.hasConnection(this)) {
-            switch (item.getItemId()) {
-                case R.id.action_popular:
-                    preferences.putInt(SELECTION_VALUE, 1);
-                    preferences.commit();
-                    movieList.clear();
-                    presenterImpl.loadData();
-                    break;
-                case R.id.action_rate:
-                    preferences.putInt(SELECTION_VALUE, 2);
-                    preferences.commit();
-                    movieList.clear();
-                    presenterImpl.loadData();
-                    break;
-                case R.id.action_fav:
-                    movieList.clear();
-                    presenterImpl.getFavoriteMovies();
-                    break;
-            }
-        } else {
-            noConnectionLayout.setVisibility(View.VISIBLE);
+        // if (Utils.hasConnection(this)) {
+        switch (item.getItemId()) {
+            case R.id.action_popular:
+                preferences.putInt(SELECTION_VALUE, 1);
+                preferences.commit();
+                movieList.clear();
+                noFavLayout.setVisibility(View.GONE);
+                presenterImpl.loadData();
+                break;
+            case R.id.action_rate:
+                preferences.putInt(SELECTION_VALUE, 2);
+                preferences.commit();
+                movieList.clear();
+                noFavLayout.setVisibility(View.GONE);
+                presenterImpl.loadData();
+                break;
+            case R.id.action_fav:
+                movieList.clear();
+                presenterImpl.getFavoriteMovies();
+                break;
         }
+//        } else {
+//            noConnectionLayout.setVisibility(View.VISIBLE);
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -140,7 +144,8 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
     public void onReceiveMovies(List<Result> list) {
         if (list == null || list.isEmpty()) {
             Utils.showLongToast(HomeActivity.this, "No Data Found !");
-            return;
+            noFavLayout.setVisibility(View.VISIBLE);
+            // return;
         }
         movieList.addAll(list);
         movieListAdapter = new MovieListAdapter(HomeActivity.this, movieList);
@@ -157,9 +162,9 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
 
     @OnClick(R.id.retry)
     public void onViewClicked() {
-        if (Utils.hasConnection(this)) {
-            presenterImpl.loadData();
-            noConnectionLayout.setVisibility(View.GONE);
-        }
+        // if (Utils.hasConnection(this)) {
+        presenterImpl.loadData();
+        noConnectionLayout.setVisibility(View.GONE);
+        //  }
     }
 }

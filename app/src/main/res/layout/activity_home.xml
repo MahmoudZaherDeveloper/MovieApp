@@ -15,6 +15,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_movie" />
 
+
     <ProgressBar
         android:id="@+id/progress_bar"
         android:layout_width="60dp"
@@ -23,5 +24,7 @@
         android:visibility="gone" />
 
     <include layout="@layout/no_connection" />
+
+    <include layout="@layout/no_favourite" />
 
 </android.support.design.widget.CoordinatorLayout>
