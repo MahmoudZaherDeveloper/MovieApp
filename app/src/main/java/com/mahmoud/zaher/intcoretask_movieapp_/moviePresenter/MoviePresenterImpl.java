@@ -80,7 +80,9 @@ public class MoviePresenterImpl implements Observer<MovieListResponse>, MoviePre
 
     @Override
     public void getFavoriteMovies() {
-
+        actionBar.setTitle(R.string.menu_fav_title);
+        ModelForCachedMovies cachedMovie = new ModelForCachedMovies(context, view);
+        cachedMovie.getFavoriteMovies();
     }
 
     @Override

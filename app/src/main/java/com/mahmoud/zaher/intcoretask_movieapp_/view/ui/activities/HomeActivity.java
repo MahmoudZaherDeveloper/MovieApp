@@ -108,6 +108,10 @@ public class HomeActivity extends AppCompatActivity implements MoviePresenterCon
                     movieList.clear();
                     presenterImpl.loadData();
                     break;
+                case R.id.action_fav:
+                    movieList.clear();
+                    presenterImpl.getFavoriteMovies();
+                    break;
             }
         } else {
             noConnectionLayout.setVisibility(View.VISIBLE);

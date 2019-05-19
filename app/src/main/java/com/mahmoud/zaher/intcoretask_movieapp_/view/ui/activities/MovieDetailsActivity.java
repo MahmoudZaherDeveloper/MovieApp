@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.mahmoud.zaher.intcoretask_movieapp_.R;
+import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.roomDatabase.ModelForCachedMovies;
 import com.mahmoud.zaher.intcoretask_movieapp_.utils.Utils;
 
 import butterknife.BindView;
@@ -35,6 +36,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     TextView tvMovieDetails;
     @BindView(R.id.ivMoviePoster)
     ImageView ivMoviePoster;
+    private String movieId;
 
     public static void start(Context context, String movieId, String movieTitle, String movieOverview, String moviePoster) {
         Intent starter = new Intent(context, MovieDetailsActivity.class);
@@ -60,7 +62,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         tvMovieTitle.setText(bundle.getString(MOVIE_TITLE));
         tvMovieTitle.setText(bundle.getString(MOVIE_TITLE));
         tvMovieDetails.setText(bundle.getString(MOVIE_OVERVIEW));
-
+        movieId = bundle.getString(MOVIE_ID);
         try {
             Glide.with(this)
                     .load(IMAGE_URL + bundle.getString(MOVIE_POSTER))
@@ -75,6 +77,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.ivFav:
                 setFavBtn();
+                int i = Integer.parseInt(movieId);
+                new ModelForCachedMovies(this, null).setFavoriteMovie(Integer.parseInt(movieId));
                 Utils.showLongToast(this, "Added to favourite .");
                 break;
             case R.id.ivBack:

@@ -40,6 +40,10 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
         this.view = IView;
     }
 
+    public ModelForCachedMovies(Context context) {
+        this.context = context;
+    }
+
     @Override
     public void setView(MoviePresenterContract.IView IView) {
         this.view = IView;
@@ -95,9 +99,20 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
 
     @Override
     public void getFavoriteMovies() {
-
+        Maybe<List<MovieEntity>> favorites = getDbInstance().moviesDao().getFavorites();
+        getMoviesData(favorites);
     }
 
+    public void setFavoriteMovie(final int movieId) {
+        Completable.fromRunnable(new Runnable() {
+            @Override
+            public void run() {
+                getDbInstance().moviesDao().setFavorite(movieId);
+
+            }
+        }).subscribeOn(Schedulers.io())
+                .subscribe();
+    }
 
     private void getMoviesData(Maybe<List<MovieEntity>> call) {
         call.subscribeOn(Schedulers.io())
@@ -112,7 +127,6 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
 
     @Override
     public void onSuccess(List<MovieEntity> movieEntityList) {
-
         view.hideLoading();
         // view.onReceiveMovies(movieListResponse.getResults());
         ArrayList<Result> movieList = new ArrayList<>();
@@ -123,7 +137,6 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
             movieResult.setOverview(entity.getMovieOverView());
             movieResult.setReleaseDate(entity.getMovieDate());
             movieResult.setPosterPath(entity.getMoviePoster());
-            // movieResult.setVoteAverage(Double.parseDouble(entity.getMovieRate()));
             movieList.add(movieResult);
         }
         view.onReceiveMovies(movieList);
@@ -141,10 +154,6 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
 
 
     public void cacheNewMovie(final List<Result> list) {
-        final MoviesDataBase MoviesDb = Room.databaseBuilder(getApplicationContext(),
-                MoviesDataBase.class, Constants.DATABASE_NAME)
-                .build();
-
         Completable.fromRunnable(new Runnable() {
             @Override
             public void run() {
@@ -157,7 +166,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
                     movieEntity.setMoviePoster(movie.getPosterPath());
                     movieEntity.setMovieRate(movie.getVoteAverage() + "/10");
                     //Now access all the methods defined in DaoAccess with sampleDatabase object
-                    MoviesDb.moviesDao().insertNewMovie(movieEntity);
+                    getDbInstance().moviesDao().insertNewMovie(movieEntity);
                 }
 
 
