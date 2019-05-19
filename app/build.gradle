@@ -57,6 +57,10 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
 
+    // Rx with room
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    androidTestImplementation "android.arch.persistence.room:testing:1.1.1"
+
     //circle image
     implementation 'de.hdodenhof:circleimageview:3.0.0'
 

@@ -1,6 +1,5 @@
 package com.mahmoud.zaher.intcoretask_movieapp_.movieModel.roomDatabase;
 
-import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.TypeConverters;
@@ -9,32 +8,30 @@ import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.apiResponse.Result;
 
 import java.util.List;
 
-@Entity(tableName = "MovieEntity")
+@Entity
 public class MovieEntity {
 
-    @ColumnInfo(name = "listOfMovies")
+    @PrimaryKey(autoGenerate = true)
+    private long movieId;
+
     @TypeConverters(MoviesConverter.class)
     public static List<Result> movieResult;
-    @PrimaryKey(autoGenerate = true)
-    private int movieId;
-    @ColumnInfo(name = "movieTitle")
+
     private String movieTitle;
-    @ColumnInfo(name = "movieOverView")
     private String movieOverView;
-    @ColumnInfo(name = "moviePoster")
     private String moviePoster;
-    @ColumnInfo(name = "movieRate")
     private String movieRate;
-    @ColumnInfo(name = "movieDate")
     private String movieDate;
-    @ColumnInfo(name = "isFav")
     private int isFav;
 
-    public int getMovieId() {
+    public MovieEntity() {
+    }
+
+    public long getMovieId() {
         return movieId;
     }
 
-    public void setMovieId(int movieId) {
+    public void setMovieId(long movieId) {
         this.movieId = movieId;
     }
 

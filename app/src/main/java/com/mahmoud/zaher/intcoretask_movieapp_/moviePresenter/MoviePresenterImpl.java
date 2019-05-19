@@ -9,6 +9,7 @@ import com.mahmoud.zaher.intcoretask_movieapp_.R;
 import com.mahmoud.zaher.intcoretask_movieapp_.apiNetworkHandler.MovieApiInterface;
 import com.mahmoud.zaher.intcoretask_movieapp_.apiNetworkHandler.NetworkClientDispatcher;
 import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.apiResponse.MovieListResponse;
+import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.roomDatabase.ModelForCachedMovies;
 import com.mahmoud.zaher.intcoretask_movieapp_.utils.Constants;
 
 import io.reactivex.Observable;
@@ -108,14 +109,24 @@ public class MoviePresenterImpl implements Observer<MovieListResponse>, MoviePre
 
     @Override
     public void onNext(MovieListResponse movieListResponse) {
+
+        ModelForCachedMovies cachedMovie = new ModelForCachedMovies(context, view);
+        cachedMovie.cacheNewMovie(movieListResponse.getResults());
+
         view.hideLoading();
         view.onReceiveMovies(movieListResponse.getResults());
     }
 
     @Override
     public void onError(Throwable e) {
-
         view.showErrorMsg(e.getMessage());
+        // in case error this mean there is no internet connection , should use cashes
+        getCashedMovies();
+    }
+
+    private void getCashedMovies() {
+        ModelForCachedMovies cachedMovies = new ModelForCachedMovies(context, view);
+        cachedMovies.getPopularMovies();
     }
 
     @Override
