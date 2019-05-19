@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 
+import com.mahmoud.zaher.intcoretask_movieapp_.MovieApplication;
 import com.mahmoud.zaher.intcoretask_movieapp_.R;
 import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.apiResponse.Result;
 import com.mahmoud.zaher.intcoretask_movieapp_.moviePresenter.MoviePresenterContract;
@@ -22,7 +23,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import rx.Subscription;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
 import static com.mahmoud.zaher.intcoretask_movieapp_.utils.Constants.SELECTION_VALUE;
 
 public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, MoviePresenterContract.IPresenter {
@@ -57,6 +57,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
                 getPopularMovies();
                 break;
             case 2:
+                // i will use the same list which used in popular
                 getTopRatedMovies();
                 break;
             default:
@@ -92,7 +93,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
     }
 
     private MoviesDataBase getDbInstance() {
-        return Room.databaseBuilder(getApplicationContext(),
+        return Room.databaseBuilder(MovieApplication.getInstance().getApplicationContext(),
                 MoviesDataBase.class, Constants.DATABASE_NAME)
                 .build();
     }
@@ -115,6 +116,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
     }
 
     private void getMoviesData(Maybe<List<MovieEntity>> call) {
+        // i will use the same list for popular and top rated
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this);
@@ -128,7 +130,6 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
     @Override
     public void onSuccess(List<MovieEntity> movieEntityList) {
         view.hideLoading();
-        // view.onReceiveMovies(movieListResponse.getResults());
         ArrayList<Result> movieList = new ArrayList<>();
         for (MovieEntity entity : movieEntityList) {
             Result movieResult = new Result();
@@ -137,6 +138,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
             movieResult.setOverview(entity.getMovieOverView());
             movieResult.setReleaseDate(entity.getMovieDate());
             movieResult.setPosterPath(entity.getMoviePoster());
+            movieResult.setVoteAverage(entity.getMovieRate());
             movieList.add(movieResult);
         }
         view.onReceiveMovies(movieList);
@@ -164,7 +166,7 @@ public class ModelForCachedMovies implements MaybeObserver<List<MovieEntity>>, M
                     movieEntity.setMovieOverView(movie.getOverview());
                     movieEntity.setMovieDate(movie.getReleaseDate());
                     movieEntity.setMoviePoster(movie.getPosterPath());
-                    movieEntity.setMovieRate(movie.getVoteAverage() + "/10");
+                    movieEntity.setMovieRate(movie.getVoteAverage());
                     //Now access all the methods defined in DaoAccess with sampleDatabase object
                     getDbInstance().moviesDao().insertNewMovie(movieEntity);
                 }

@@ -16,8 +16,8 @@ public interface MoviesDao {
     void insertNewMovie(MovieEntity movieEntity);
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-        // void insertListOfMovies(List<MovieEntity> movieEntityList);
     void insertListOfMovies(MovieEntity movieEntityList);
+    // void insertListOfMovies(List<MovieEntity> movieEntityList);
 
     /**
      * Single is an Observable which only emits one item or throws an error.

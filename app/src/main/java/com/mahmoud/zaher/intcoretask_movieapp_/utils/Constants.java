@@ -3,7 +3,6 @@ package com.mahmoud.zaher.intcoretask_movieapp_.utils;
 public class Constants {
 
     public final static String IMAGE_URL = "https://image.tmdb.org/t/p/w500/";
-    //public final static String BASE_URL = "https://api.themoviedb.org/3/movie/550";
     public final static String BASE_URL = "https://api.themoviedb.org/3/movie/";
     public static final String API_KEY = "1959301b68a4afd398706087243bd824";
     public static final String API_MOST_POPULAR = "popular";
@@ -19,6 +18,10 @@ public class Constants {
     public static final String MOVIE_OVERVIEW = "movieOverview";
     public static final String MOVIE_POSTER = "moviePoster";
     public static final String DATABASE_NAME = "movies_db";
-//    https://api.themoviedb.org/3/movie/popular?api_key=1959301b68a4afd398706087243bd824&language=en-US&page=1
+
+    /*
+     * worker link to make sure API work on post man
+     * https://api.themoviedb.org/3/movie/popular?api_key=1959301b68a4afd398706087243bd824&language=en-US&page=1
+     */
 
 }

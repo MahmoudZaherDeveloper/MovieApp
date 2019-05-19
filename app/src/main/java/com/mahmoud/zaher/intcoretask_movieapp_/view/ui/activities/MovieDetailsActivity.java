@@ -77,7 +77,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.ivFav:
                 setFavBtn();
-                int i = Integer.parseInt(movieId);
                 new ModelForCachedMovies(this, null).setFavoriteMovie(Integer.parseInt(movieId));
                 Utils.showLongToast(this, "Added to favourite .");
                 break;

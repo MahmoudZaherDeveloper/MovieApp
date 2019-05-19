@@ -1,5 +1,6 @@
 package com.mahmoud.zaher.intcoretask_movieapp_.view.ui.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -57,12 +58,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MyVi
     }
 
     // bind data to view holder
+    @SuppressLint("SetTextI18n")
     private void bindDataToHolder(Result movieResult, MovieListAdapter.MyViewHolder holder) {
         final String movieId = String.valueOf(movieResult.getId());
         final String movieResultTitle = movieResult.getTitle();
         final String movieResultOverview = movieResult.getOverview();
         String movieResultReleaseDate = movieResult.getReleaseDate();
-        double voteAverage = movieResult.getVoteAverage();
+        String voteAverage = movieResult.getVoteAverage();
         final String moviePosterPath = movieResult.getPosterPath();
 
         holder.cardViewLayout.setVisibility(View.VISIBLE);

@@ -82,6 +82,7 @@ public class MoviePresenterImpl implements Observer<MovieListResponse>, MoviePre
     public void getFavoriteMovies() {
         actionBar.setTitle(R.string.menu_fav_title);
         ModelForCachedMovies cachedMovie = new ModelForCachedMovies(context, view);
+        // get favourite from cashes
         cachedMovie.getFavoriteMovies();
     }
 

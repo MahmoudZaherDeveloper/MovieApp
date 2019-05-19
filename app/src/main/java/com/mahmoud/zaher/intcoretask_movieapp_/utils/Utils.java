@@ -20,7 +20,7 @@ public class Utils {
     public static final boolean DEBUGGABLE = true;
 
     /**
-     * get the hash key
+     * get the hash key to use it FB
      */
     public static String getHashKey(Context context) {
         String hashKey = null;

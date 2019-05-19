@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Result extends SerialiazableClass {
+public class Result {
 
     @SerializedName("vote_count")
     @Expose
@@ -19,7 +19,7 @@ public class Result extends SerialiazableClass {
     private boolean video;
     @SerializedName("vote_average")
     @Expose
-    private double voteAverage;
+    private String voteAverage;
     @SerializedName("title")
     @Expose
     private String title;
@@ -75,11 +75,11 @@ public class Result extends SerialiazableClass {
         this.video = video;
     }
 
-    public double getVoteAverage() {
+    public String getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 

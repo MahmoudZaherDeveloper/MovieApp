@@ -14,7 +14,6 @@ import com.facebook.login.widget.LoginButton;
 import com.mahmoud.zaher.intcoretask_movieapp_.R;
 import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.userData.User;
 import com.mahmoud.zaher.intcoretask_movieapp_.movieModel.userData.UserPrefsController;
-import com.mahmoud.zaher.intcoretask_movieapp_.utils.Utils;
 
 import java.util.Arrays;
 
@@ -40,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         userPrefsController = new UserPrefsController(this);
         // we use it in https://developers.facebook.com/docs/facebook-login/android   -=> in Key Hashes
-        String hashKey = Utils.getHashKey(this);
+        // String hashKey = Utils.getHashKey(this);
         loginWithFB();
     }
 
